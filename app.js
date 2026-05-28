@@ -3,6 +3,13 @@
 const MODELS = [
   // ── DOUBLEWORD MODELS ─────────────────────────────────────
 
+   {
+  id: "claude-haiku-4-5-20251001",
+  name: "⚡Claude Haiku",
+  description: "Free Claude Haiku via FreeModel",
+  apiKeyHint: "Uses your FreeModel API key",
+  baseURL: "https://cc.freemodel.dev/v1"
+},
   {
     id: "deepseek-ai/DeepSeek-V4-Flash",
     name: "⚡ DeepSeek V4 Flash",
@@ -17,6 +24,13 @@ const MODELS = [
     apiKeyHint: "Uses your DoubleWord API key",
     baseURL: "https://api.doubleword.ai/v1"
   },
+  {
+  id: "claude-opus-4-7",
+  name: "💀 Claude Opus 4.7",
+  description: "Free Claude Opus via FreeModel",
+  apiKeyHint: "Uses your FreeModel API key",
+  baseURL: "https://cc.freemodel.dev/v1"
+},
    {
     id: "deepseek-ai/DeepSeek-V4-Pro",
     name: "💸 DeepSeek V4 Pro",
@@ -35,13 +49,7 @@ const MODELS = [
   
 
   // ── FREEMODEL MODELS (FREE) ───────────────────────────────
-  {
-    id: "claude-t0",
-    name: "🔥 Claude",
-    description: "Free Claude model via FreeModel",
-    apiKeyHint: "Uses your FreeModel API key",
-    baseURL: "https://cc.freemodel.dev/v1"   // ← Anthropic format endpoint
-  },
+
   {
     id: "gpt-4o-mini",
     name: "🌩️ GPT-4o Mini",
