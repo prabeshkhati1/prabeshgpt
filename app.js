@@ -2,13 +2,7 @@
 
 const MODELS = [
   // ── DOUBLEWORD MODELS ─────────────────────────────────────
-  {
-    id: "deepseek-ai/DeepSeek-V4-Pro",
-    name: "⚡ DeepSeek V4 Pro",
-    description: "Intelligence: 50 · Context: 1M · from $0.87/M",
-    apiKeyHint: "Uses your DoubleWord API key",
-    baseURL: "https://api.doubleword.ai/v1"
-  },
+
   {
     id: "deepseek-ai/DeepSeek-V4-Flash",
     name: "⚡ DeepSeek V4 Flash",
@@ -16,74 +10,41 @@ const MODELS = [
     apiKeyHint: "Uses your DoubleWord API key",
     baseURL: "https://api.doubleword.ai/v1"
   },
-  {
-    id: "qwen/qwen3.6-35b-a3b",
-    name: "⚡ Qwen 3.6 35B A3B",
-    description: "Intelligence: 43 · Context: 262K · from $0.05/M",
-    apiKeyHint: "Uses your DoubleWord API key",
-    baseURL: "https://api.doubleword.ai/v1"
-  },
-  {
-    id: "moonshotai/Kimi-K2.6",
-    name: "⚡ Kimi K2.6",
-    description: "Intelligence: 54 · Context: 262K · from $0.45/M",
-    apiKeyHint: "Uses your DoubleWord API key",
-    baseURL: "https://api.doubleword.ai/v1"
-  },
-  {
-    id: "z.ai/glm-5.1",
-    name: "⚡ GLM 5.1",
-    description: "Intelligence: 51 · Context: 203K · from $0.70/M",
-    apiKeyHint: "Uses your DoubleWord API key",
-    baseURL: "https://api.doubleword.ai/v1"
-  },
-  {
-    id: "google/gemma-4-31b-it",
+   {
+    id: "google/gemma-4-31B-it",
     name: "⚡ Gemma 4 31B IT",
     description: "Intelligence: 39 · Context: 256K · from $0.07/M",
     apiKeyHint: "Uses your DoubleWord API key",
     baseURL: "https://api.doubleword.ai/v1"
   },
-  {
-    id: "nvidia/nemotron-3-super-120b-a12b",
-    name: "⚡ Nemotron 3 Super 120B",
-    description: "Intelligence: 36 · Context: 262K · from $0.15/M",
+   {
+    id: "deepseek-ai/DeepSeek-V4-Pro",
+    name: "💸 DeepSeek V4 Pro",
+    description: "Intelligence: 50 · Context: 1M · from $0.87/M",
     apiKeyHint: "Uses your DoubleWord API key",
     baseURL: "https://api.doubleword.ai/v1"
   },
   {
-    id: "qwen/qwen3.5-9b-dottxt",
-    name: "⚡ Qwen 3.5 9B dottxt",
-    description: "Intelligence: 32 · Context: 262K · from $0.06/M",
-    apiKeyHint: "Uses your DoubleWord API key",
-    baseURL: "https://api.doubleword.ai/v1"
-  },
-  {
-    id: "qwen/qwen3.5-4b",
-    name: "⚡ Qwen 3.5 4B",
-    description: "Intelligence: 27 · Context: 262K · from $0.04/M",
-    apiKeyHint: "Uses your DoubleWord API key",
-    baseURL: "https://api.doubleword.ai/v1"
-  },
-  {
-    id: "qwen/qwen3.5-9b",
-    name: "⚡ Qwen 3.5 9B",
-    description: "Intelligence: 32 · Context: 262K · from $0.03/M",
+    id: "moonshotai/Kimi-K2.6",
+    name: "💸 Kimi K2.6",
+    description: "Intelligence: 54 · Context: 262K · from $0.45/M",
     apiKeyHint: "Uses your DoubleWord API key",
     baseURL: "https://api.doubleword.ai/v1"
   },
 
+  
+
   // ── FREEMODEL MODELS (FREE) ───────────────────────────────
   {
     id: "claude-t0",
-    name: "🆓 Claude",
+    name: "🔥 Claude",
     description: "Free Claude model via FreeModel",
     apiKeyHint: "Uses your FreeModel API key",
     baseURL: "https://cc.freemodel.dev/v1"   // ← Anthropic format endpoint
   },
   {
     id: "gpt-4o-mini",
-    name: "🆓 GPT-4o Mini",
+    name: "🌩️ GPT-4o Mini",
     description: "Free GPT-4o Mini via FreeModel",
     apiKeyHint: "Uses your FreeModel API key",
     baseURL: "https://api.freemodel.dev/v1"
