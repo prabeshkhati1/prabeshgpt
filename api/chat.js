@@ -1,10 +1,4 @@
-// api/chat.js — Vercel Serverless Proxy for Doubleword API
-// This file MUST live at /api/chat.js in your repo root.
-// It forwards browser requests to Doubleword server-side,
-// which fixes the "Failed to fetch" CORS error.
-
 export default async function handler(req, res) {
-  // Only allow POST
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
@@ -30,7 +24,15 @@ export default async function handler(req, res) {
       }),
     });
 
-    const data = await response.json();
+    const text = await response.text();  // read as text first
+
+    let data;
+    try {
+      data = JSON.parse(text);  // try to parse as JSON
+    } catch {
+      // Doubleword returned plain text (e.g. auth error)
+      return res.status(response.status).json({ error: text });
+    }
 
     if (!response.ok) {
       return res.status(response.status).json({ error: data });
@@ -38,7 +40,6 @@ export default async function handler(req, res) {
 
     return res.status(200).json(data);
   } catch (err) {
-    console.error("Proxy error:", err);
-    return res.status(500).json({ error: err.message || "Internal server error" });
+    return res.status(500).json({ error: err.message });
   }
 }
