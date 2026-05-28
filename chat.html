@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet" />
 </head>
 <body class="chat-body">
-
   <div class="noise-overlay"></div>
 
   <!-- SIDEBAR -->
@@ -22,11 +21,12 @@
     </div>
 
     <!-- ════════════════════════════════════════
-         🔑 API CONFIGURATION SECTION
-         Add your DoubleWord API keys and model
-         list here. See app.js → MODELS array
-         and CONFIG object for full setup.
+      🔑 API CONFIGURATION SECTION
+      Add your DoubleWord API keys and model
+      list here. See app.js → MODELS array
+      and CONFIG object for full setup.
     ════════════════════════════════════════ -->
+
     <div class="sidebar-section">
       <label class="section-label">Active Model</label>
       <div class="model-selector-wrap">
@@ -50,10 +50,7 @@
       <div class="key-status" id="keyStatus"></div>
     </div>
 
-    <div class="sidebar-section">
-      <label class="section-label">System Prompt</label>
-      <textarea id="systemPrompt" class="system-prompt-input" rows="4" placeholder="Optional: Set a system instruction for the model…"></textarea>
-    </div>
+    <!-- SYSTEM PROMPT SECTION REMOVED -->
 
     <div class="sidebar-section params-section">
       <label class="section-label">Parameters</label>
