@@ -28,7 +28,7 @@ const MODELS = [
     apiKeyHint: "Uses your DoubleWord API key"
   },
   {
-    id: "moonshot/kimi-k2.6",
+    id: "moonshotai/Kimi-K2.6",
     name: "Kimi K2.6",
     description: "Intelligence: 54 · Context: 262K · from $0.45/M",
     apiKeyHint: "Uses your DoubleWord API key"
