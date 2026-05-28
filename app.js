@@ -76,21 +76,21 @@ const MODELS = [
   // ── FREEMODEL MODELS (FREE) ───────────────────────────────
   {
     id: "claude-t0",
-    name: "🆓 Claude (Free)",
+    name: "🆓 Claude",
     description: "Free Claude model via FreeModel",
     apiKeyHint: "Uses your FreeModel API key",
     baseURL: "https://cc.freemodel.dev/v1"   // ← Anthropic format endpoint
   },
   {
     id: "gpt-4o-mini",
-    name: "🆓 GPT-4o Mini (Free)",
+    name: "🆓 GPT-4o Mini",
     description: "Free GPT-4o Mini via FreeModel",
     apiKeyHint: "Uses your FreeModel API key",
     baseURL: "https://api.freemodel.dev/v1"
   },
   {
     id: "gpt-4.1-nano",
-    name: "🆓 GPT-4.1 Nano (Free)",
+    name: "🆓 GPT-4.1 Nano",
     description: "Free GPT-4.1 Nano via FreeModel",
     apiKeyHint: "Uses your FreeModel API key",
     baseURL: "https://api.freemodel.dev/v1"
