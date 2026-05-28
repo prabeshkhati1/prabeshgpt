@@ -3,7 +3,6 @@
 const MODELS = [
   // ── DOUBLEWORD MODELS ─────────────────────────────────────
 
-},
   {
     id: "deepseek-ai/DeepSeek-V4-Flash",
     name: "⚡ DeepSeek V4 Flash",
