@@ -3,20 +3,6 @@
 const MODELS = [
   // ── DOUBLEWORD MODELS ─────────────────────────────────────
 
-  {
-  id: "claude-sonnet-4-6",
-  name: "🆓 Claude Sonnet (Free)",
-  description: "Free Claude Sonnet via FreeModel",
-  apiKeyHint: "Uses your FreeModel API key",
-  baseURL: "https://cc.freemodel.dev/v1"
-},
-  
-  {
-  id: "claude-haiku-4-5-20251001",
-  name: "⚡Claude Haiku",
-  description: "Free Claude Haiku via FreeModel",
-  apiKeyHint: "Uses your FreeModel API key",
-  baseURL: "https://cc.freemodel.dev/v1"
 },
   {
     id: "deepseek-ai/DeepSeek-V4-Flash",
@@ -32,13 +18,7 @@ const MODELS = [
     apiKeyHint: "Uses your DoubleWord API key",
     baseURL: "https://api.doubleword.ai/v1"
   },
-  {
-  id: "claude-opus-4-7",
-  name: "💀 Claude Opus 4.7",
-  description: "Free Claude Opus via FreeModel",
-  apiKeyHint: "Uses your FreeModel API key",
-  baseURL: "https://cc.freemodel.dev/v1"
-},
+  
    {
     id: "deepseek-ai/DeepSeek-V4-Pro",
     name: "💸 DeepSeek V4 Pro",
@@ -65,13 +45,7 @@ const MODELS = [
     apiKeyHint: "Uses your FreeModel API key",
     baseURL: "https://api.freemodel.dev/v1"
   },
-  {
-    id: "gpt-4.1-nano",
-    name: "🆓 GPT-4.1 Nano",
-    description: "Free GPT-4.1 Nano via FreeModel",
-    apiKeyHint: "Uses your FreeModel API key",
-    baseURL: "https://api.freemodel.dev/v1"
-  },
+  
 ];
 
 async function callDoubleWord({ model, baseURL, messages, apiKey, systemPrompt, temperature, maxTokens }) {
