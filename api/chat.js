@@ -3,11 +3,23 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { model, messages, temperature, max_tokens, apiKey, baseURL } = req.body;
+  const { model, messages, apiKey, baseURL } = req.body;
 
   if (!apiKey) {
     return res.status(400).json({ error: "Missing API key" });
   }
+
+  if (!model) {
+    return res.status(400).json({ error: "Missing model" });
+  }
+
+  if (!messages || !Array.isArray(messages) || messages.length === 0) {
+    return res.status(400).json({ error: "Missing or invalid messages" });
+  }
+
+  // ── Hardcoded parameters ──
+  const TEMPERATURE = 0.7;
+  const MAX_TOKENS = 2000;
 
   const isAnthropic = baseURL && baseURL.includes("cc.freemodel.dev");
 
@@ -21,7 +33,8 @@ export default async function handler(req, res) {
 
       const body = {
         model,
-        max_tokens: parseInt(max_tokens) || 1024,
+        max_tokens: MAX_TOKENS,
+        temperature: TEMPERATURE,
         messages: nonSystemMsgs,
         ...(systemMsg && { system: systemMsg.content }),
       };
@@ -50,10 +63,10 @@ export default async function handler(req, res) {
 
       // Convert Anthropic response → OpenAI format so frontend works unchanged
       return res.status(200).json({
-        choices: [{ message: { content: data.content?.[0]?.text } }],
+        choices: [{ message: { content: data.content?.[0]?.text ?? "" } }],
         usage: {
-          total_tokens: (data.usage?.input_tokens || 0) + (data.usage?.output_tokens || 0)
-        }
+          total_tokens: (data.usage?.input_tokens || 0) + (data.usage?.output_tokens || 0),
+        },
       });
 
     } else {
@@ -69,8 +82,8 @@ export default async function handler(req, res) {
         body: JSON.stringify({
           model,
           messages,
-         temperature: 0.7,
-max_tokens: 2000,
+          temperature: TEMPERATURE,
+          max_tokens: MAX_TOKENS,
         }),
       });
 
@@ -90,6 +103,7 @@ max_tokens: 2000,
     }
 
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    console.error("[chat.js error]", err);
+    return res.status(500).json({ error: err.message || "Internal server error" });
   }
 }
