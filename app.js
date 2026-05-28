@@ -50,9 +50,8 @@ const MODELS = [
 async function callDoubleWord({ model, baseURL, messages, apiKey, systemPrompt, temperature, maxTokens }) {
 
   const fullMessages = [];
-  if (systemPrompt && systemPrompt.trim()) {
-    fullMessages.push({ role: "system", content: systemPrompt.trim() });
-  }
+  const HARDCODED_SYSTEM_PROMPT = "You are PrabeshGPT, a helpful AI assistant created by Prabesh"; // LINE 54 — hardcoded system prompt
+  fullMessages.push({ role: "system", content: HARDCODED_SYSTEM_PROMPT });                         // LINE 55 — always injected, ignores textarea
   fullMessages.push(...messages);
 
   const response = await fetch("/api/chat", {
