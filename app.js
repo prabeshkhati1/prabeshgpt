@@ -27,24 +27,66 @@
 ────────────────────────────────────────────────────────────── */
 const MODELS = [
   {
-    id: "YOUR_MODEL_ID_1",          // ← replace with real model ID
-    name: "Model One",
-    description: "Replace with your model's description.",
-    apiKeyHint: "Uses your primary API key"
+    id: "deepseek/deepseek-v4-pro",
+    name: "DeepSeek V4 Pro",
+    description: "Intelligence: 50 · Context: 1M · from $0.87/M",
+    apiKeyHint: "Uses your DoubleWord API key"
   },
   {
-    id: "YOUR_MODEL_ID_2",          // ← replace with real model ID
-    name: "Model Two",
-    description: "Replace with your model's description.",
-    apiKeyHint: "Uses your primary API key"
+    id: "deepseek/deepseek-v4-flash",
+    name: "DeepSeek V4 Flash",
+    description: "Intelligence: 47 · Context: 1M · from $0.07/M",
+    apiKeyHint: "Uses your DoubleWord API key"
   },
-  // Add more models here as needed:
-  // {
-  //   id: "MODEL_ID_3",
-  //   name: "Model Three",
-  //   description: "...",
-  //   apiKeyHint: "..."
-  // },
+  {
+    id: "qwen/qwen3.6-35b-a3b",
+    name: "Qwen 3.6 35B A3B",
+    description: "Intelligence: 43 · Context: 262K · from $0.05/M",
+    apiKeyHint: "Uses your DoubleWord API key"
+  },
+  {
+    id: "moonshot/kimi-k2.6",
+    name: "Kimi K2.6",
+    description: "Intelligence: 54 · Context: 262K · from $0.45/M",
+    apiKeyHint: "Uses your DoubleWord API key"
+  },
+  {
+    id: "z.ai/glm-5.1",
+    name: "GLM 5.1",
+    description: "Intelligence: 51 · Context: 203K · from $0.70/M",
+    apiKeyHint: "Uses your DoubleWord API key"
+  },
+  {
+    id: "google/gemma-4-31b-it",
+    name: "Gemma 4 31B IT",
+    description: "Intelligence: 39 · Context: 256K · from $0.07/M",
+    apiKeyHint: "Uses your DoubleWord API key"
+  },
+  {
+    id: "nvidia/nemotron-3-super-120b-a12b",
+    name: "Nemotron 3 Super 120B",
+    description: "Intelligence: 36 · Context: 262K · from $0.15/M",
+    apiKeyHint: "Uses your DoubleWord API key"
+  },
+  {
+    id: "qwen/qwen3.5-9b-dottxt",
+    name: "Qwen 3.5 9B dottxt",
+    description: "Intelligence: 32 · Context: 262K · from $0.06/M",
+    apiKeyHint: "Uses your DoubleWord API key"
+  },
+  {
+    id: "qwen/qwen3.5-4b",
+    name: "Qwen 3.5 4B",
+    description: "Intelligence: 27 · Context: 262K · from $0.04/M",
+    apiKeyHint: "Uses your DoubleWord API key"
+  },
+  {
+    id: "qwen/qwen3.5-9b",
+    name: "Qwen 3.5 9B",
+    description: "Intelligence: 32 · Context: 262K · from $0.03/M",
+    apiKeyHint: "Uses your DoubleWord API key"
+  },
+  // Add more from app.doubleword.ai/models — click the </> API button to get the exact model id
 ];
 
 /* ──────────────────────────────────────────────────────────────
@@ -54,8 +96,8 @@ const MODELS = [
    Check your DoubleWord dashboard for the exact endpoint.
 ────────────────────────────────────────────────────────────── */
 const CONFIG = {
-  baseURL: "https://api.doubleword.ai/v1",   // ← confirm this with your DoubleWord docs
-  chatEndpoint: "/chat/completions",          // ← adjust if DoubleWord uses a different path
+  baseURL: "https://api.doubleword.ai/v1",
+  chatEndpoint: "/chat/completions",
 };
 
 /* ══════════════════════════════════════════════════════════════
