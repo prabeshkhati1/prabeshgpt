@@ -3,14 +3,17 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { model, messages, temperature, max_tokens, apiKey } = req.body;
+  const { model, messages, temperature, max_tokens, apiKey, baseURL } = req.body;
 
   if (!apiKey) {
     return res.status(400).json({ error: "Missing API key" });
   }
 
+  // Use provided baseURL or fall back to Doubleword
+  const endpoint = `${baseURL || "https://api.doubleword.ai/v1"}/chat/completions`;
+
   try {
-    const response = await fetch("https://api.doubleword.ai/v1/chat/completions", {
+    const response = await fetch(endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,13 +27,11 @@ export default async function handler(req, res) {
       }),
     });
 
-    const text = await response.text();  // read as text first
-
+    const text = await response.text();
     let data;
     try {
-      data = JSON.parse(text);  // try to parse as JSON
+      data = JSON.parse(text);
     } catch {
-      // Doubleword returned plain text (e.g. auth error)
       return res.status(response.status).json({ error: text });
     }
 
