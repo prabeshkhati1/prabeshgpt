@@ -1,3 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrabeshGPT — Chat</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet" />
+</head>
+<body class="chat-body">
+  <div class="noise-overlay"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Home
+      </a>
+      <div class="logo-mark small">PG<span class="logo-dot">•</span></div>
+    </div>
+
+    <div class="sidebar-section">
+      <label class="section-label" for="modelSelect">Active Model</label>
+      <div class="model-selector-wrap">
+        <select id="modelSelect" class="model-select"></select>
+        <svg class="select-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </div>
+      <div class="model-meta" id="modelMeta">Select a model to see details</div>
 <!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-header">
@@ -11,6 +44,27 @@
     <div class="logo-mark small">
       PG<span class="logo-dot">•</span>
     </div>
+
+    <div class="sidebar-section">
+      <label class="section-label" for="apiKeyInput">API Key</label>
+      <div class="api-key-wrap">
+        <input
+          type="password"
+          id="apiKeyInput"
+          class="api-key-input"
+          placeholder="Enter your API key…"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button class="eye-btn" id="toggleKey" type="button" title="Show/hide key" aria-label="Toggle API key visibility">
+          <svg id="eyeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
+      <button class="save-key-btn" id="saveKeyBtn" type="button">Save Key</button>
+      <div class="key-status" id="keyStatus" aria-live="polite"></div>
   </div>
 
   <!-- MODEL -->
@@ -35,19 +89,44 @@
       </svg>
     </div>
 
+    <!-- Add these if your app.js expects them -->
+    <div class="sidebar-section">
+      <label class="section-label" for="systemPrompt">System Prompt</label>
+      <textarea
+        id="systemPrompt"
+        class="system-prompt"
+        rows="5"
+        placeholder="Optional system prompt..."
+      ></textarea>
     <div class="model-meta" id="modelMeta">
       Select a model to see details
     </div>
   </div>
 
+    <div class="sidebar-section">
+      <label class="section-label" for="tempSlider">Temperature</label>
+      <div class="slider-row">
+        <input id="tempSlider" type="range" min="0" max="2" step="0.1" value="1" />
+        <span id="tempVal">1.0</span>
+      </div>
+    </div>
   <!-- API KEY -->
   <div class="sidebar-section">
     <label class="section-label" for="apiKeyInput">
       API Key
     </label>
 
+    <div class="sidebar-section">
+      <label class="section-label" for="maxTokens">Max Tokens</label>
     <div class="api-key-wrap">
       <input
+        id="maxTokens"
+        type="number"
+        class="tokens-input"
+        min="1"
+        max="8192"
+        step="1"
+        value="1024"
         type="password"
         id="apiKeyInput"
         class="api-key-input"
@@ -55,7 +134,14 @@
         autocomplete="off"
         spellcheck="false"
       />
+    </div>
 
+    <div class="sidebar-actions">
+      <button class="action-btn danger" id="clearBtn" type="button" title="Clear all messages">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="3 6 5 6 21 6"></polyline>
+          <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"></path>
+          <path d="M10 11v6M14 11v6"></path>
       <button
         class="eye-btn"
         id="toggleKey"
@@ -75,9 +161,87 @@
           <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
           <circle cx="12" cy="12" r="3"></circle>
         </svg>
+        Clear Chat
       </button>
     </div>
+  </aside>
 
+  <!-- SIDEBAR OVERLAY (mobile tap-to-close) -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- SIDEBAR TOGGLE (mobile) -->
+  <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Toggle sidebar">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </button>
+
+  <!-- MAIN CHAT AREA -->
+  <main class="chat-main">
+    <div class="chat-topbar">
+      <div class="active-model-badge" id="activeBadge">No model selected</div>
+      <div class="token-counter" id="tokenCounter">0 tokens used</div>
+    </div>
+
+    <div class="messages-area" id="messagesArea" role="log" aria-live="polite" aria-label="Chat messages">
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">⬡</div>
+        <div class="empty-title">Ready when you are!</div>
+      </div>
+    </div>
+
+    <div class="input-area">
+      <div class="input-box-wrap">
+        <textarea
+          id="messageInput"
+          class="message-input"
+          placeholder="Send a message…"
+          rows="1"
+          aria-label="Message input"
+          spellcheck="true"
+          autocomplete="off"
+        ></textarea>
+        <button class="send-btn" id="sendBtn" type="button" disabled aria-label="Send message">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+      <div class="input-meta">
+        <span id="charCount">0 chars</span>
+        <span>Press <kbd>Ctrl+Enter</kbd> to send</span>
+      </div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      const toggle = document.getElementById('sidebarToggle');
+
+      if (overlay && sidebar) {
+        overlay.addEventListener('click', () => {
+          sidebar.classList.remove('open');
+          overlay.classList.remove('active');
+        });
+      }
+
+      if (toggle && sidebar && overlay) {
+        toggle.addEventListener('click', () => {
+          sidebar.classList.toggle('open');
+          overlay.classList.toggle('active');
+        });
+      }
+    });
+  </script>
+</body>
+</html>
     <button
       class="save-key-btn"
       id="saveKeyBtn"
