@@ -79,7 +79,7 @@ const MODELS = [
     name: "🆓 Claude (Free)",
     description: "Free Claude model via FreeModel",
     apiKeyHint: "Uses your FreeModel API key",
-    baseURL: "https://api.freemodel.dev/v1"
+    baseURL: "https://cc.freemodel.dev/v1"   // ← Anthropic format endpoint
   },
   {
     id: "gpt-4o-mini",
@@ -116,7 +116,7 @@ async function callDoubleWord({ model, baseURL, messages, apiKey, systemPrompt, 
       temperature: parseFloat(temperature) || 0.7,
       max_tokens: parseInt(maxTokens) || 1024,
       apiKey: apiKey,
-      baseURL: baseURL,   // ← tells the proxy which API to call
+      baseURL: baseURL,
     }),
   });
 
