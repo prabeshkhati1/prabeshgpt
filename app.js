@@ -3,7 +3,15 @@
 const MODELS = [
   // ── DOUBLEWORD MODELS ─────────────────────────────────────
 
-   {
+  {
+  id: "claude-sonnet-4-6",
+  name: "🆓 Claude Sonnet (Free)",
+  description: "Free Claude Sonnet via FreeModel",
+  apiKeyHint: "Uses your FreeModel API key",
+  baseURL: "https://cc.freemodel.dev/v1"
+},
+  
+  {
   id: "claude-haiku-4-5-20251001",
   name: "⚡Claude Haiku",
   description: "Free Claude Haiku via FreeModel",
