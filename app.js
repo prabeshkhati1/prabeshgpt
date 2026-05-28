@@ -1,83 +1,103 @@
-/* ════════════════════════════════════════════════════════════════
-   DoubleWord AI Studio — app.js
-   ────────────────────────────────────────────────────────────────
-   FIX APPLIED: Replaced direct Doubleword API call with a call
-   to /api/chat (Vercel serverless proxy) to fix CORS errors.
-   You also need /api/chat.js in your repo — see that file.
-════════════════════════════════════════════════════════════════ */
-
 "use strict";
 
 const MODELS = [
+  // ── DOUBLEWORD MODELS ─────────────────────────────────────
   {
     id: "deepseek-ai/DeepSeek-V4-Pro",
-    name: "DeepSeek V4 Pro",
+    name: "⚡ DeepSeek V4 Pro",
     description: "Intelligence: 50 · Context: 1M · from $0.87/M",
-    apiKeyHint: "Uses your DoubleWord API key"
+    apiKeyHint: "Uses your DoubleWord API key",
+    baseURL: "https://api.doubleword.ai/v1"
   },
   {
     id: "deepseek-ai/DeepSeek-V4-Flash",
-    name: "DeepSeek V4 Flash",
+    name: "⚡ DeepSeek V4 Flash",
     description: "Intelligence: 47 · Context: 1M · from $0.07/M",
-    apiKeyHint: "Uses your DoubleWord API key"
+    apiKeyHint: "Uses your DoubleWord API key",
+    baseURL: "https://api.doubleword.ai/v1"
   },
   {
     id: "qwen/qwen3.6-35b-a3b",
-    name: "Qwen 3.6 35B A3B",
+    name: "⚡ Qwen 3.6 35B A3B",
     description: "Intelligence: 43 · Context: 262K · from $0.05/M",
-    apiKeyHint: "Uses your DoubleWord API key"
+    apiKeyHint: "Uses your DoubleWord API key",
+    baseURL: "https://api.doubleword.ai/v1"
   },
   {
     id: "moonshotai/Kimi-K2.6",
-    name: "Kimi K2.6",
+    name: "⚡ Kimi K2.6",
     description: "Intelligence: 54 · Context: 262K · from $0.45/M",
-    apiKeyHint: "Uses your DoubleWord API key"
+    apiKeyHint: "Uses your DoubleWord API key",
+    baseURL: "https://api.doubleword.ai/v1"
   },
   {
     id: "z.ai/glm-5.1",
-    name: "GLM 5.1",
+    name: "⚡ GLM 5.1",
     description: "Intelligence: 51 · Context: 203K · from $0.70/M",
-    apiKeyHint: "Uses your DoubleWord API key"
+    apiKeyHint: "Uses your DoubleWord API key",
+    baseURL: "https://api.doubleword.ai/v1"
   },
   {
     id: "google/gemma-4-31b-it",
-    name: "Gemma 4 31B IT",
+    name: "⚡ Gemma 4 31B IT",
     description: "Intelligence: 39 · Context: 256K · from $0.07/M",
-    apiKeyHint: "Uses your DoubleWord API key"
+    apiKeyHint: "Uses your DoubleWord API key",
+    baseURL: "https://api.doubleword.ai/v1"
   },
   {
     id: "nvidia/nemotron-3-super-120b-a12b",
-    name: "Nemotron 3 Super 120B",
+    name: "⚡ Nemotron 3 Super 120B",
     description: "Intelligence: 36 · Context: 262K · from $0.15/M",
-    apiKeyHint: "Uses your DoubleWord API key"
+    apiKeyHint: "Uses your DoubleWord API key",
+    baseURL: "https://api.doubleword.ai/v1"
   },
   {
     id: "qwen/qwen3.5-9b-dottxt",
-    name: "Qwen 3.5 9B dottxt",
+    name: "⚡ Qwen 3.5 9B dottxt",
     description: "Intelligence: 32 · Context: 262K · from $0.06/M",
-    apiKeyHint: "Uses your DoubleWord API key"
+    apiKeyHint: "Uses your DoubleWord API key",
+    baseURL: "https://api.doubleword.ai/v1"
   },
   {
     id: "qwen/qwen3.5-4b",
-    name: "Qwen 3.5 4B",
+    name: "⚡ Qwen 3.5 4B",
     description: "Intelligence: 27 · Context: 262K · from $0.04/M",
-    apiKeyHint: "Uses your DoubleWord API key"
+    apiKeyHint: "Uses your DoubleWord API key",
+    baseURL: "https://api.doubleword.ai/v1"
   },
   {
     id: "qwen/qwen3.5-9b",
-    name: "Qwen 3.5 9B",
+    name: "⚡ Qwen 3.5 9B",
     description: "Intelligence: 32 · Context: 262K · from $0.03/M",
-    apiKeyHint: "Uses your DoubleWord API key"
+    apiKeyHint: "Uses your DoubleWord API key",
+    baseURL: "https://api.doubleword.ai/v1"
+  },
+
+  // ── FREEMODEL MODELS (FREE) ───────────────────────────────
+  {
+    id: "claude-t0",
+    name: "🆓 Claude (Free)",
+    description: "Free Claude model via FreeModel",
+    apiKeyHint: "Uses your FreeModel API key",
+    baseURL: "https://api.freemodel.dev/v1"
+  },
+  {
+    id: "gpt-4o-mini",
+    name: "🆓 GPT-4o Mini (Free)",
+    description: "Free GPT-4o Mini via FreeModel",
+    apiKeyHint: "Uses your FreeModel API key",
+    baseURL: "https://api.freemodel.dev/v1"
+  },
+  {
+    id: "gpt-4.1-nano",
+    name: "🆓 GPT-4.1 Nano (Free)",
+    description: "Free GPT-4.1 Nano via FreeModel",
+    apiKeyHint: "Uses your FreeModel API key",
+    baseURL: "https://api.freemodel.dev/v1"
   },
 ];
 
-/* ──────────────────────────────────────────────────────────────
-   THE ONLY THING THAT CHANGED:
-   Instead of calling https://api.doubleword.ai/v1 directly
-   (which browsers block due to CORS), we call our own Vercel
-   serverless function at /api/chat which proxies the request.
-────────────────────────────────────────────────────────────── */
-async function callDoubleWord({ model, messages, apiKey, systemPrompt, temperature, maxTokens }) {
+async function callDoubleWord({ model, baseURL, messages, apiKey, systemPrompt, temperature, maxTokens }) {
 
   const fullMessages = [];
   if (systemPrompt && systemPrompt.trim()) {
@@ -85,7 +105,6 @@ async function callDoubleWord({ model, messages, apiKey, systemPrompt, temperatu
   }
   fullMessages.push(...messages);
 
-  // ✅ FIXED: call /api/chat (our proxy) instead of Doubleword directly
   const response = await fetch("/api/chat", {
     method: "POST",
     headers: {
@@ -97,6 +116,7 @@ async function callDoubleWord({ model, messages, apiKey, systemPrompt, temperatu
       temperature: parseFloat(temperature) || 0.7,
       max_tokens: parseInt(maxTokens) || 1024,
       apiKey: apiKey,
+      baseURL: baseURL,   // ← tells the proxy which API to call
     }),
   });
 
@@ -218,7 +238,7 @@ async function sendMessage() {
 
   const apiKey = apiKeyInput.value.trim();
   if (!apiKey) {
-    showError("No API key set. Add your DoubleWord API key in the sidebar.");
+    showError("No API key set. Add your API key in the sidebar.");
     return;
   }
 
@@ -243,6 +263,7 @@ async function sendMessage() {
   try {
     const { reply, tokensUsed } = await callDoubleWord({
       model: model.id,
+      baseURL: model.baseURL,
       messages: conversationHistory,
       apiKey,
       systemPrompt: systemPrompt.value,
@@ -260,7 +281,7 @@ async function sendMessage() {
     }
   } catch (err) {
     typingEl.remove();
-    console.error("DoubleWord API error:", err);
+    console.error("API error:", err);
     showError(err.message || "Something went wrong. Check the console.");
   } finally {
     isWaiting = false;
