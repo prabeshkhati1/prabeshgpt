@@ -69,8 +69,8 @@ export default async function handler(req, res) {
         body: JSON.stringify({
           model,
           messages,
-          Creativity: parseFloat(temperature) || 0.7,
-          max_tokens: parseInt(max_tokens) || 1024,
+         temperature: 0.7,
+max_tokens: 2000,
         }),
       });
 
