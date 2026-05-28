@@ -10,13 +10,13 @@
 
 const MODELS = [
   {
-    id: "deepseek/deepseek-v4-pro",
+    id: "deepseek-ai/DeepSeek-V4-Pro",
     name: "DeepSeek V4 Pro",
     description: "Intelligence: 50 · Context: 1M · from $0.87/M",
     apiKeyHint: "Uses your DoubleWord API key"
   },
   {
-    id: "deepseek/deepseek-v4-flash",
+    id: "deepseek-ai/DeepSeek-V4-Flash",
     name: "DeepSeek V4 Flash",
     description: "Intelligence: 47 · Context: 1M · from $0.07/M",
     apiKeyHint: "Uses your DoubleWord API key"
