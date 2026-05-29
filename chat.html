@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrabeshGPT — Chat</title>
+  <link rel="stylesheet" href="style.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap"
+    rel="stylesheet"
+  />
+</head>
+
+<!--
+  FIX: The original chat.html had two <aside class="sidebar"> blocks
+  merged/overlapping with each other, producing duplicate IDs
+  (modelSelect, apiKeyInput, saveKeyBtn, etc.) which caused JS to
+  target only the first occurrence and silently ignore the second.
+  Rebuilt as a single, clean sidebar.
+
+  FIX: Removed the System Prompt textarea, Temperature slider, and
+  Max Tokens number input — those values are now hardcoded in
+  CONFIG inside app.js and are no longer part of the UI.
+-->
+
+<body class="chat-body">
+  <div class="noise-overlay"></div>
+
+  <!-- ══════════════════════════════════
+       SIDEBAR
+  ══════════════════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- Header -->
+    <div class="sidebar-header">
+      <a href="index.html" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Home
+      </a>
+      <div class="logo-mark small">PG<span class="logo-dot">•</span></div>
+    </div>
+
+    <!-- Model selector -->
+    <div class="sidebar-section">
+      <label class="section-label" for="modelSelect">Active Model</label>
+      <div class="model-selector-wrap">
+        <select id="modelSelect" class="model-select">
+          <!-- Populated by app.js → initModels() -->
+        </select>
+        <svg class="select-arrow" width="14" height="14" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </div>
+      <!-- Shows model ID and provider hint, set by app.js → updateModelMeta() -->
+      <div class="model-meta" id="modelMeta">Select a model to see details</div>
+    </div>
+
+    <!-- API Key -->
+    <!--
+      FIX: Single API key input — app.js now handles per-provider
+      storage (dw_api_key vs fm_api_key) transparently, so the
+      UI only needs one field. The displayed key switches
+      automatically when the model selection changes.
+    -->
+    <div class="sidebar-section">
+      <label class="section-label" for="apiKeyInput">API Key</label>
+      <div class="api-key-wrap">
+        <input
+          type="password"
+          id="apiKeyInput"
+          class="api-key-input"
+          placeholder="Enter your API key…"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button
+          class="eye-btn"
+          id="toggleKey"
+          type="button"
+          title="Show/hide key"
+          aria-label="Toggle API key visibility"
+        >
+          <svg id="eyeIcon" width="16" height="16" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
+      <button class="save-key-btn" id="saveKeyBtn" type="button">Save Key</button>
+      <div class="key-status" id="keyStatus" aria-live="polite"></div>
+    </div>
+
+    <!--
+      REMOVED: System Prompt textarea
+      REMOVED: Temperature slider
+      REMOVED: Max Tokens input
+      These are now hardcoded in CONFIG at the top of app.js.
+    -->
+
+    <!-- Actions -->
+    <div class="sidebar-actions">
+      <button
+        class="action-btn danger"
+        id="clearBtn"
+        type="button"
+        title="Clear all messages"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2">
+          <polyline points="3 6 5 6 21 6"></polyline>
+          <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"></path>
+          <path d="M10 11v6M14 11v6"></path>
+        </svg>
+        Clear Chat
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- Sidebar overlay — tapping this closes the sidebar on mobile -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Sidebar hamburger toggle (mobile only, shown via CSS) -->
+  <button
+    class="sidebar-toggle"
+    id="sidebarToggle"
+    type="button"
+    aria-label="Toggle sidebar"
+  >
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2">
+      <line x1="3"  y1="6"  x2="21" y2="6"></line>
+      <line x1="3"  y1="12" x2="21" y2="12"></line>
+      <line x1="3"  y1="18" x2="21" y2="18"></line>
+    </svg>
+  </button>
+
+  <!-- ══════════════════════════════════
+       MAIN CHAT AREA
+  ══════════════════════════════════ -->
+  <main class="chat-main">
+
+    <!-- Top bar: active model name + token counter -->
+    <div class="chat-topbar">
+      <div class="active-model-badge" id="activeBadge">No model selected</div>
+      <div class="token-counter" id="tokenCounter">0 tokens used</div>
+    </div>
+
+    <!-- Message feed -->
+    <div
+      class="messages-area"
+      id="messagesArea"
+      role="log"
+      aria-live="polite"
+      aria-label="Chat messages"
+    >
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">⬡</div>
+        <div class="empty-title">Ready when you are!</div>
+        <div class="empty-sub">
+          Pick a model from the sidebar, add your API key, and start chatting.
+        </div>
+      </div>
+    </div>
+
+    <!-- Input bar -->
+    <div class="input-area">
+      <div class="input-box-wrap">
+        <textarea
+          id="messageInput"
+          class="message-input"
+          placeholder="Send a message…"
+          rows="1"
+          aria-label="Message input"
+          spellcheck="true"
+          autocomplete="off"
+        ></textarea>
+        <button
+          class="send-btn"
+          id="sendBtn"
+          type="button"
+          disabled
+          aria-label="Send message"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.5">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+      <div class="input-meta">
+        <span id="charCount">0 chars</span>
+        <span>Press <kbd>Ctrl+Enter</kbd> to send</span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- app.js must load after the DOM elements above are defined -->
+  <script src="app.js"></script>
+
+  <!--
+    FIX: sidebar overlay events are wired up here after app.js
+    has run, so the overlay element is guaranteed to exist.
+    app.js also handles the toggle as a fallback.
+  -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("sidebarOverlay");
+      const toggle  = document.getElementById("sidebarToggle");
+
+      if (overlay && sidebar) {
+        overlay.addEventListener("click", () => {
+          sidebar.classList.remove("open");
+          overlay.classList.remove("active");
+        });
+      }
+
+      if (toggle && sidebar && overlay) {
+        // Note: app.js also attaches a click listener to sidebarToggle.
+        // Both are harmless — they both toggle the same classes.
+        toggle.addEventListener("click", () => {
+          sidebar.classList.toggle("open");
+          overlay.classList.toggle("active");
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
