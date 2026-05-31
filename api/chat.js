@@ -13,13 +13,13 @@
 //   💸 DeepSeek V4 Pro    (deepseek-ai/DeepSeek-V4-Pro)
 //   💸 Kimi K2.6          (moonshotai/Kimi-K2.6)
 // Get / rotate at: https://doubleword.ai/dashboard
-const DOUBLEWORD_KEY = "PASTE_YOUR_DOUBLEWORD_KEY_HERE";
+const DOUBLEWORD_KEY = "sk-EWEGd-W9NxyI6Y-SSG_klrt3fqx94EPRDd4ubs1QCOY"; //PASTE_YOUR_DOUBLEWORD_KEY_HERE
 
 // FreeModel key — used for ALL models on freemodel.dev:
 //   🌩️ GPT-4o Mini        (gpt-4o-mini  via api.freemodel.dev)
 //   Any Claude models you add later (via cc.freemodel.dev)
 // Get / rotate at: https://freemodel.dev/dashboard
-const FREEMODEL_KEY = "PASTE_YOUR_FREEMODEL_KEY_HERE";
+const FREEMODEL_KEY = "fe_oa_6c17153ca42cdf5120eae6137a36f90c2dd818c3c2ac9462"; //PASTE_YOUR_FREEMODEL_KEY_HERE
 
 // ═══════════════════════════════════════════════════════════════
 // Adding a new provider?
