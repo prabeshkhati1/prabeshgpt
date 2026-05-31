@@ -19,7 +19,7 @@ const DOUBLEWORD_KEY = "sk-EWEGd-W9NxyI6Y-SSG_klrt3fqx94EPRDd4ubs1QCOY"; //PASTE
 //   🌩️ GPT-4o Mini        (gpt-4o-mini  via api.freemodel.dev)
 //   Any Claude models you add later (via cc.freemodel.dev)
 // Get / rotate at: https://freemodel.dev/dashboard
-const FREEMODEL_KEY = "fe_oa_6c17153ca42cdf5120eae6137a36f90c2dd818c3c2ac9462"; //PASTE_YOUR_FREEMODEL_KEY_HERE
+const FREEMODEL_KEY = "fe_oa_e83f8ec46638e172fde2fb8f15b3525968b0e5820cc53b89"; //PASTE_YOUR_FREEMODEL_KEY_HERE
 
 // ═══════════════════════════════════════════════════════════════
 // Adding a new provider?
