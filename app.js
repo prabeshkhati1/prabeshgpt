@@ -20,34 +20,26 @@ const CONFIG = {
 const MODELS = [
   {
     id:          "deepseek-ai/DeepSeek-V4-Flash",
-    name:        "⚡ DeepSeek V4 Flash",
+    name:        "⚡ Fast",
     description: "Intelligence: 47 · Context: 1M · from $0.07/M",
     baseURL:     "https://api.doubleword.ai/v1",
   },
-  {
-    id:          "google/gemma-4-31B-it",
-    name:        "⚡ Gemma 4 31B IT",
-    description: "Intelligence: 39 · Context: 256K · from $0.07/M",
-    baseURL:     "https://api.doubleword.ai/v1",
-  },
-  {
-    id:          "deepseek-ai/DeepSeek-V4-Pro",
-    name:        "💸 DeepSeek V4 Pro",
-    description: "Intelligence: 50 · Context: 1M · from $0.87/M",
-    baseURL:     "https://api.doubleword.ai/v1",
-  },
-  {
-    id:          "moonshotai/Kimi-K2.6",
-    name:        "💸 Kimi K2.6",
-    description: "Intelligence: 54 · Context: 262K · from $0.45/M",
-    baseURL:     "https://api.doubleword.ai/v1",
-  },
-  {
+
+   {
     id:          "gpt-4o-mini",
-    name:        "🌩️ GPT-4o Mini",
+    name:        "🧠 Balanced",
     description: "Free GPT-4o Mini via FreeModel",
     baseURL:     "https://api.freemodel.dev/v1",
   },
+ 
+  {
+    id:          "deepseek-ai/DeepSeek-V4-Pro",
+    name:        "🔬 Deep",
+    description: "Intelligence: 50 · Context: 1M · from $0.87/M",
+    baseURL:     "https://api.doubleword.ai/v1",
+  },
+ 
+
 ];
 
 // ─────────────────────────────────────────────────────────────
